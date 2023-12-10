@@ -12,3 +12,59 @@ body {
     font-family: 'Abril Fatface', serif;
     font-family: 'Poppins', sans-serif;
 }
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  /* footer support */
+  position: relative;
+  min-height: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Abril Fatface', serif;
+  font-weight: 400;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  min-height: 100px;
+  padding: 25px;
+  background-color: var(--primary-green);
+}
+
+.logo {
+  max-height: 75px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+aside {
+  background-color: var(--secondary-green);
+  border-right: 2px var(--primary-green) solid;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  height: 100%;
+}
+
+footer {
+  background-color: var(--primary-green);
+  display: grid;
+  place-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+}
