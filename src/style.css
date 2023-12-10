@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins&display=swap');
+
+:root {
+    --primary-green: #51B28A;
+    --secondary-green: #D4E8DA;
+    --primary-button: #B877B9;
+    --important-thing: #FCFF61;
+    --very-important-thing: #FF8C8C;
+  }
+
+body {
+    font-family: 'Abril Fatface', serif;
+    font-family: 'Poppins', sans-serif;
+}
