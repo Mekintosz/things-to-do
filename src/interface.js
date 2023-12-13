@@ -1,5 +1,5 @@
-import createTask from "./taskModules";
-import { createList, manageLists } from "./listModules";
+import { createTask, addTaskToList } from "./taskModules";
+import { manageLists } from "./listModules";
 
 (function renderLists() {
 
@@ -8,9 +8,11 @@ import { createList, manageLists } from "./listModules";
     manageLists().getLists().forEach( (list) => {
         const listElement = document.createElement("li");
         listElement.classList.add("list-ul");
-        listElement.innerText = list.name;
+        listElement.innerText = list.title;
         listsContainer.appendChild(listElement);
     });
+    
+   
 })();
 
 function clearElement(element) {
@@ -18,6 +20,22 @@ function clearElement(element) {
         element.remove(firstChild);
     }
 };
+
+let dd = createTask("pranie")
+console.log(dd)
+addTaskToList(dd);
+let newList = (manageLists().createList("nowaLista"))
+console.log(newList)
+const showButton = document.getElementById("add-thing-button");
+   
+    function add() {manageLists().addList(newList)}
+    showButton.addEventListener("click", (e) => {add(),
+    console.log(manageLists().getLists())})
+
+
+
+
+
 
 // function renderThings() {
 //     const thingsListContainer = document.querySelector("[data-things]");

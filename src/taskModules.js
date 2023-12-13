@@ -1,9 +1,25 @@
-function createTask(name, list = manageLists().lists[0]) {
-    return { id: Date.now().toString(), name, list, complete: false };
+import { manageLists } from "./listModules";
+
+
+
+function createTask(title, list = "random") {
+    return { 
+        id: Date.now().toString(),
+        title,
+        list,
+        complete: false, 
+    };
 }
 
-function manageTasksList() {
-    const addTaskToList = (task) => lists
+function addTaskToList(task) {
+    for (let x of manageLists().getLists()) {
+        if (x.title == task.list) {
+            manageLists().addList(task);
+        } 
+
+    }
+    // manageLists().getLists().push(manageLists().createList(task.list));
+
 }
 
-export { createTask }
+export { createTask, addTaskToList }
