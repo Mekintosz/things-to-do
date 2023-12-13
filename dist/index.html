@@ -14,7 +14,60 @@
         <h1>Things to do...</h1>
         <div class="buttons-container">
             <button id="add-thing-button" class="button add-thing-button"><img src="../assets/add_circle.svg" alt="plus in circle" class="btn-icon">add Thing...</button>
+            <dialog id="dialog1">
+                <form>
+                    <p>
+                      <label autofocus>
+                        Thing to do:
+                        <input id="thing-input-name">
+                      </label>
+                    </p>
+                    <p>
+                        <label >
+                            Description:
+                            <input id="thing-input-description">
+                        </label>
+                    </p>
+                    <p>
+                        <label >
+                            Due date:
+                            <input id="thing-input-duedate">
+                        </label>
+                    </p>
+                    <p>
+                        <select>
+                          <option value="default">Low</option>
+                          <option>High</option>
+                          <option>Very important!!!</option>
+                        </select>
+                    </p>
+                    <div>
+                      <button value="cancel" formmethod="dialog">Cancel</button>
+                      <button id="confirmBtn" value="default">Confirm</button>
+                    </div>
+                  </form>
+              </dialog>
             <button id="add-set-button" class="button add-set-button"><img src="../assets/set.svg" alt="three dots in triangle" class="btn-icon">add Set</button>
+            <dialog id="dialog2">
+                <form>
+                    <p>
+                      <label >
+                         Name:
+                        <input id="input-name" autofocus>
+                      </label>
+                    </p>
+                    <p>
+                        <label >
+                          Description:
+                          <input id="input-description">
+                        </label>
+                      </p>
+                    <div>
+                      <button value="cancel" formmethod="dialog">Cancel</button>
+                      <button id="confirmBtn" value="default">Confirm</button>
+                    </div>
+                  </form>
+              </dialog>
         </div>
    </header>
    <main class="main">

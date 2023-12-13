@@ -1,25 +1,18 @@
 import createTask from "./taskModules";
 
-function createTaskList (name, description) {
-    
-    let taskList = [];
 
-    const addTaskToList = () => taskList.push(createTask());
-
-    const getListName = () => name;
-    const setListName = newName => name = newName;
-
-    const getListDescription = () => description;
-    const setListDescription = newDescription => description = newDescription;
+const manageLists = function () {
 
 
-    return { taskList, addTaskToList, getListName, setListName, getListDescription, setListDescription };
+    let lists = [{name: "random"}];
+
+    const createList = function (name) {
+        return lists.push({ id: Date.now().toString(), name, tasks: [] });
+    }
+    const getLists = () => lists;
+    const removeList = (listToRemoveID) => lists = lists.filter(list => list.id !== listToRemoveID); 
+
+    return { createList, getLists, removeList }
 }
 
-let lists = [["probna", "dozrobienia"]];
-
-function addListsData() {
-    lists.push(createTaskList());
-}
-
-export { createTaskList, addListsData, lists };
+export { manageLists };
