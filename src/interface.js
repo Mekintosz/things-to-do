@@ -1,13 +1,6 @@
 import {createTask, addTaskToList, manageLists, createList} from "./appLogic";
 
-
-
-// addTaskToList(dd);
-// manageLists().createList("nowaLista")
-
-// lists.push("totot")
-
-(function renderLists() {
+function renderLists() {
 
     const listsContainer = document.querySelector("[data-list]");
     clearElement(listsContainer);
@@ -17,13 +10,13 @@ import {createTask, addTaskToList, manageLists, createList} from "./appLogic";
         listElement.innerText = list.title;
         listsContainer.appendChild(listElement);
     });
-    
-   
-})();
+};
+
+renderLists()
 
 function clearElement(element) {
     while (element.firstChild) {
-        element.remove(firstChild);
+        element.firstChild.remove();
     }
 };
 
@@ -33,12 +26,42 @@ console.log(manageLists().getLists())
 manageLists().removeList('sprzątanie')
 console.log(manageLists().getLists())
 
-// const showButton = document.getElementById("add-thing-button");
-   
-//     function add() {manageLists.addList(newList)}
-//     showButton.addEventListener("click", (e) => {add(),
-//     console.log(manageLists().getLists())})
+const addSetBtn = document.getElementById("add-set-button");
+const setDialog = document.getElementById('dialog2')
+const inputName = setDialog.querySelector("#input-name");
+const confirmBtn = setDialog.querySelector("#confirmBtn2");
 
+addSetBtn.addEventListener("click", () => {
+        return setDialog.showModal();
+    })
+
+    confirmBtn.addEventListener("click", (event) => {
+        event.preventDefault(); // We don't want to submit this fake form
+        manageLists().addList(createList(inputName.value))
+        renderLists()
+        });
+        
+
+        // // "Show the dialog" button opens the <dialog> modally
+        // showButton.addEventListener("click", () => {
+        // setDialog.showModal();
+        // });
+    
+        // // "Favorite animal" input sets the value of the submit button
+        // inputName.addEventListener("change", (e) => {
+        // confirmBtn.value = selectEl.value;
+        // });
+    
+        // // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
+        // thingDialog.addEventListener("close", (e) => {
+        // outputBox.value =
+        //     favDialog.returnValue === "default"
+        //     ? "No return value."
+        //     : `ReturnValue: ${favDialog.returnValue}.`; // Have to check for "default" rather than empty string
+        // });
+    
+        // // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
+        
 
 
 
@@ -77,32 +100,5 @@ console.log(manageLists().getLists())
 
 // (function setDialogOnClick() {
 
-//     const showButton = document.getElementById("add-set-button");
-//     const setDialog = document.getElementById("dialog2");
-//     const inputName = setDialog.querySelector("#input1");
-//     const confirmBtn = setDialog.querySelector("#confirmBtn");
-
-//     // "Show the dialog" button opens the <dialog> modally
-//     showButton.addEventListener("click", () => {
-//     setDialog.showModal();
-//     });
-
-//     // "Favorite animal" input sets the value of the submit button
-//     inputName.addEventListener("change", (e) => {
-//     confirmBtn.value = selectEl.value;
-//     });
-
-//     // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
-//     thingDialog.addEventListener("close", (e) => {
-//     outputBox.value =
-//         favDialog.returnValue === "default"
-//         ? "No return value."
-//         : `ReturnValue: ${favDialog.returnValue}.`; // Have to check for "default" rather than empty string
-//     });
-
-//     // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
-//     confirmBtn.addEventListener("click", (event) => {
-//     event.preventDefault(); // We don't want to submit this fake form
-//     thingialog.close(selectEl.value); // Have to send the select box value here.
-//     });
+//     
 // })();
