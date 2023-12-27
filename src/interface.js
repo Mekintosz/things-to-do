@@ -1,11 +1,17 @@
-import { createTask, addTaskToList } from "./taskModules";
-import { manageLists } from "./listModules";
+import {createTask, addTaskToList, manageLists, createList} from "./appLogic";
+
+
+
+// addTaskToList(dd);
+// manageLists().createList("nowaLista")
+
+// lists.push("totot")
 
 (function renderLists() {
 
     const listsContainer = document.querySelector("[data-list]");
     clearElement(listsContainer);
-    manageLists().getLists().forEach( (list) => {
+    manageLists().getLists().forEach((list) => {
         const listElement = document.createElement("li");
         listElement.classList.add("list-ul");
         listElement.innerText = list.title;
@@ -21,16 +27,17 @@ function clearElement(element) {
     }
 };
 
-let dd = createTask("pranie")
-console.log(dd)
-addTaskToList(dd);
-let newList = (manageLists().createList("nowaLista"))
-console.log(newList)
-const showButton = document.getElementById("add-thing-button");
+manageLists().addList(createList('sprzątanie'))
+addTaskToList(createTask('rozpędzanie'))
+console.log(manageLists().getLists())
+manageLists().removeList('sprzątanie')
+console.log(manageLists().getLists())
+
+// const showButton = document.getElementById("add-thing-button");
    
-    function add() {manageLists().addList(newList)}
-    showButton.addEventListener("click", (e) => {add(),
-    console.log(manageLists().getLists())})
+//     function add() {manageLists.addList(newList)}
+//     showButton.addEventListener("click", (e) => {add(),
+//     console.log(manageLists().getLists())})
 
 
 
