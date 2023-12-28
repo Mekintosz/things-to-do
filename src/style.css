@@ -100,6 +100,10 @@ footer {
   padding: 1rem;
 }
 
+.active-list {
+  background: pink;
+}
+
 .button {
   width: 200px;
   font-size: 1.1rem;

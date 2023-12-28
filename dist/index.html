@@ -14,7 +14,7 @@
         <h1>Things to do...</h1>
         <div class="buttons-container">
             <button id="add-thing-button" class="button add-thing-button"><img src="../assets/add_circle.svg" alt="plus in circle" class="btn-icon">add Thing...</button>
-            <dialog id="dialog1">
+            <dialog id="dialog-1">
                 <form>
                     <p>
                       <label autofocus>
@@ -22,6 +22,11 @@
                         <input id="thing-input-name">
                       </label>
                     </p>
+                    <p>
+                      <label >
+                          List:
+                          <input id="thing-input-list">
+                      </label>
                     <p>
                         <label >
                             Description:
@@ -42,13 +47,13 @@
                         </select>
                     </p>
                     <div>
-                      <button value="cancel" formmethod="dialog">Cancel</button>
-                      <button id="confirmBtn" value="default">Confirm</button>
+                      <button id="cancel-btn-1" value="cancel" formmethod="dialog">Cancel</button>
+                      <button id="confirm-btn-1" value="default">Confirm</button>
                     </div>
                   </form>
               </dialog>
             <button id="add-set-button" class="button add-set-button"><img src="../assets/set.svg" alt="three dots in triangle" class="btn-icon">add Set</button>
-            <dialog id="dialog2">
+            <dialog id="dialog-2">
                 <form>
                     <p>
                       <label >
@@ -63,8 +68,8 @@
                         </label>
                       </p>
                     <div>
-                      <button value="cancel" formmethod="dialog">Cancel</button>
-                      <button id="confirmBtn2" value="default">Confirm</button>
+                      <button id="cancel-btn-2" value="cancel" formmethod="dialog">Cancel</button>
+                      <button id="confirm-btn-2" value="default">Confirm</button>
                     </div>
                   </form>
               </dialog>
@@ -73,9 +78,9 @@
    <main class="main">
         <aside>
             <h2>Sets :</h2>
-            <ul class="set-list" data-list></ul>
+            <ul class="sets-list" data-list></ul>
         </aside>
-        <div class="things-list">
+        <div class="things-container">
             <h2 class="title"><img src="../assets/set.svg" alt="" class="list-icon">Things to do...</h2>
             <ul class="things-list" data-things></ul>
         </div>

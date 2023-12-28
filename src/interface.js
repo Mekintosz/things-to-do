@@ -1,11 +1,25 @@
-import {createTask, addTaskToList, manageLists, createList} from "./appLogic";
+import {manageTasks, manageLists} from "./appLogic";
+
+const listsContainer = document.querySelector("[data-list]");
+let selectedListId = ""
+
+listsContainer.addEventListener("click", e => {
+    if (e.target.tagName.toLowerCase() === 'li') {
+        selectedListId = e.target.dataset.listId
+        renderLists()
+    }
+} )
 
 function renderLists() {
 
-    const listsContainer = document.querySelector("[data-list]");
+    
     clearElement(listsContainer);
-    manageLists().getLists().forEach((list) => {
+    manageLists.getLists().forEach((list) => {
         const listElement = document.createElement("li");
+        listElement.dataset.listId = list.id
+        if (list.id === selectedListId) {
+            listElement.classList.add('active-list')
+        }
         listElement.classList.add("list-ul");
         listElement.innerText = list.title;
         listsContainer.appendChild(listElement);
@@ -14,32 +28,77 @@ function renderLists() {
 
 renderLists()
 
+function renderThings() {
+    const thingsContainer = document.querySelector("[data-things]");
+    clearElement(thingsContainer)
+    const activeList = document.querySelector('.active-list')
+
+} 
+
 function clearElement(element) {
     while (element.firstChild) {
         element.firstChild.remove();
     }
 };
 
-manageLists().addList(createList('sprzątanie'))
-addTaskToList(createTask('rozpędzanie'))
-console.log(manageLists().getLists())
-manageLists().removeList('sprzątanie')
-console.log(manageLists().getLists())
+manageLists.addList(manageLists.createList('sprzątanie'))
+manageTasks.addTaskToList(manageTasks.createTask('rozpędzanie'))
+console.log(manageLists.getLists())
+manageLists.removeList('sprzątanie')
+console.log(manageLists.getLists())
+
+listsContainer
 
 const addSetBtn = document.getElementById("add-set-button");
-const setDialog = document.getElementById('dialog2')
-const inputName = setDialog.querySelector("#input-name");
-const confirmBtn = setDialog.querySelector("#confirmBtn2");
+const setDialog = document.getElementById('dialog-2')
+const inputSetName = setDialog.querySelector("#input-name");
+const confirmSetBtn = setDialog.querySelector("#confirm-btn-2");
+const cancelSetBtn = document.getElementById('cancel-btn-2')
 
 addSetBtn.addEventListener("click", () => {
-        return setDialog.showModal();
-    })
+    return setDialog.showModal();
+})
 
-    confirmBtn.addEventListener("click", (event) => {
-        event.preventDefault(); // We don't want to submit this fake form
-        manageLists().addList(createList(inputName.value))
-        renderLists()
-        });
+confirmSetBtn.addEventListener("click", (event) => {
+    event.preventDefault()
+    manageLists.addList(manageLists.createList(inputSetName.value))
+    setDialog.close()
+    renderLists()
+});
+
+cancelSetBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    setDialog.close()
+})
+
+const addTaskBtn = document.getElementById("add-thing-button")
+const thingDialog = document.getElementById('dialog-1')
+const inputThingName = document.getElementById('thing-input-name')
+const inputThingList = document.getElementById('thing-input-list')
+const inputThingDescription = document.getElementById('thing-input-description')
+const inputThingDueDate = document.getElementById('thing-input-duedate')
+const confirmThingBtn = thingDialog.querySelector("#confirm-btn-1");
+const cancelThingBtn = document.getElementById('cancel-btn-1')
+
+addTaskBtn.addEventListener("click", () => {
+    return thingDialog.showModal();
+})
+
+confirmThingBtn.addEventListener("click", (event) => {
+    event.preventDefault()
+    manageTasks.addTaskToList(manageTasks.createTask(inputThingName.value, inputThingList.value))
+    thingDialog.close()
+    renderLists()
+});
+    
+cancelThingBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    thingDialog.close()
+})
+
+
+
+
         
 
         // // "Show the dialog" button opens the <dialog> modally
@@ -60,8 +119,6 @@ addSetBtn.addEventListener("click", () => {
         //     : `ReturnValue: ${favDialog.returnValue}.`; // Have to check for "default" rather than empty string
         // });
     
-        // // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
-        
 
 
 
