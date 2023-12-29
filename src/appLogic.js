@@ -14,7 +14,9 @@ const manageTasks = (function () {
         for (let list of manageLists.getLists()) {
             if (list.title === task.list) {
                 list.tasks.push(task);
-            } 
+            } else {
+                manageLists.createList(task.list)
+            }
         }
     }
 
@@ -24,7 +26,7 @@ const manageTasks = (function () {
 
 
 
-let lists = [{id: "001", title: "random", tasks: []}, {id: "002", title: "hophop"}];
+let lists = [{id: "001", title: "random", tasks: [{title: '001 task', list: 'random'}]}, {id: "002", title: "hophop", tasks: [{title: '071 task', list: 'hophop'}]}];
 
 const manageLists = (function () {
     
