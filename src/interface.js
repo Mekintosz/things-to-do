@@ -8,25 +8,30 @@ const taskTemplate = document.getElementById('task-template')
 let selectedListId = "";
 render();
 
+const addSetBtn = document.getElementById("add-set-button");
+const setDialog = document.getElementById("dialog-2");
+const inputSetName = setDialog.querySelector("#set-input-name");
+const inputSetDescription = setDialog.querySelector("#set-input-description");
+const confirmSetBtn = setDialog.querySelector("#confirm-btn-2");
+const cancelSetBtn = document.getElementById("cancel-btn-2");
+
+const addTaskBtn = document.getElementById("add-thing-button");
+const thingDialog = document.getElementById("dialog-1");
+const inputThingName = document.getElementById("thing-input-name");
+const inputThingList = document.getElementById("thing-input-list");
+const inputThingDescription = document.getElementById(
+  "thing-input-description"
+);
+const inputThingDueDate = document.getElementById("thing-input-duedate");
+const confirmThingBtn = thingDialog.querySelector("#confirm-btn-1");
+const cancelThingBtn = document.getElementById("cancel-btn-1");
+
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
     selectedListId = e.target.dataset.listId;
     render();
   }
 });
-
-function renderLists() {
-  manageLists.getLists().forEach((list) => {
-    const listElement = document.createElement("li");
-    listElement.dataset.listId = list.id;
-    if (list.id === selectedListId) {
-      listElement.classList.add("active-list");
-    }
-    listElement.classList.add("list-ul");
-    listElement.innerText = list.title;
-    listsContainer.appendChild(listElement);
-  });
-}
 
 function render() {
   clearElement(listsContainer);
@@ -42,6 +47,19 @@ function render() {
     clearElement(thingsContainer);
     renderThings(activeList);
   }
+}
+
+function renderLists() {
+  manageLists.getLists().forEach((list) => {
+    const listElement = document.createElement("li");
+    listElement.dataset.listId = list.id;
+    if (list.id === selectedListId) {
+      listElement.classList.add("active-list");
+    }
+    listElement.classList.add("list-ul");
+    listElement.innerText = list.title;
+    listsContainer.appendChild(listElement);
+  });
 }
 
 function renderThings(activeList) {
@@ -63,13 +81,6 @@ function clearElement(element) {
   }
 }
 
-const addSetBtn = document.getElementById("add-set-button");
-const setDialog = document.getElementById("dialog-2");
-const inputSetName = setDialog.querySelector("#set-input-name");
-const inputSetDescription = setDialog.querySelector("#set-input-description");
-const confirmSetBtn = setDialog.querySelector("#confirm-btn-2");
-const cancelSetBtn = document.getElementById("cancel-btn-2");
-
 addSetBtn.addEventListener("click", () => {
   return setDialog.showModal();
 });
@@ -86,17 +97,6 @@ cancelSetBtn.addEventListener("click", (event) => {
   event.preventDefault();
   setDialog.close();
 });
-
-const addTaskBtn = document.getElementById("add-thing-button");
-const thingDialog = document.getElementById("dialog-1");
-const inputThingName = document.getElementById("thing-input-name");
-const inputThingList = document.getElementById("thing-input-list");
-const inputThingDescription = document.getElementById(
-  "thing-input-description"
-);
-const inputThingDueDate = document.getElementById("thing-input-duedate");
-const confirmThingBtn = thingDialog.querySelector("#confirm-btn-1");
-const cancelThingBtn = document.getElementById("cancel-btn-1");
 
 function emptyThingDialog() {
   inputThingName.value = null;
@@ -117,7 +117,7 @@ confirmThingBtn.addEventListener("click", (event) => {
   event.preventDefault();
   let newThing = manageTasks.createTask(
     inputThingName.value,
-    inputThingList.value,
+    inputThingList.value || "random",
     inputThingDueDate.value,
     inputThingDescription.value
   );

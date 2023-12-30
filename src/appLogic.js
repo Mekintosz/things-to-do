@@ -27,12 +27,12 @@ let lists = [
   {
     id: "001",
     title: "random",
-    tasks: [{ id: '001', title: "001 task", list: "random", complete: false }],
+    tasks: [{ id: '001', title: "test task (random) 001 task", list: "random", complete: false }],
   },
   {
     id: "002",
     title: "hophop",
-    tasks: [{ id: '071', title: "071 task", list: "hophop", complete: false }],
+    tasks: [{ id: '072', title: "test task.2 (hophop) 071.2 task", list: "hophop", complete: false }, { id: '071', title: "test task (hophop) 071 task", list: "hophop", complete: false }],
   },
 ];
 
