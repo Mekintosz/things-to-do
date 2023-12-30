@@ -26,6 +26,10 @@ html {
   min-height: 100%;
 }
 
+ul {
+  list-style: none;
+}
+
 h1, h2, h3, h4 {
   font-family: 'Cutive', serif;
   font-weight: 400;
@@ -86,6 +90,10 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 70%;
+}
+
+.things-container {
   width: 70%;
 }
 

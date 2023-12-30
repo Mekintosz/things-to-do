@@ -3,6 +3,8 @@ import { manageTasks, manageLists } from "./appLogic";
 const listsContainer = document.querySelector("[data-list]");
 const thingsTitleElement = document.querySelector(".things-list-title");
 const thingsContainer = document.querySelector("[data-things]");
+const tasksContainer = document.querySelector('[data-things]')
+const taskTemplate = document.getElementById('task-template')
 let selectedListId = "";
 render();
 
@@ -44,9 +46,14 @@ function render() {
 
 function renderThings(activeList) {
   activeList.tasks.forEach((thing) => {
-    const taskElement = document.createElement("li");
-    taskElement.innerText = thing.title;
-    thingsContainer.appendChild(taskElement);
+    const taskElement = document.importNode(taskTemplate.content, true)
+    const checkbox = taskElement.querySelector('input')
+    checkbox.id = thing.id
+    checkbox.checked = thing.complete
+    const label = taskElement.querySelector('label')
+    label.htmlFor = thing.id
+    label.append(thing.title)
+    tasksContainer.appendChild(taskElement)
   });
 }
 
@@ -111,6 +118,7 @@ confirmThingBtn.addEventListener("click", (event) => {
   let newThing = manageTasks.createTask(
     inputThingName.value,
     inputThingList.value,
+    inputThingDueDate.value,
     inputThingDescription.value
   );
   manageTasks.addTaskToList(newThing)
@@ -123,54 +131,3 @@ cancelThingBtn.addEventListener("click", (event) => {
   event.preventDefault();
   thingDialog.close();
 });
-
-// // "Show the dialog" button opens the <dialog> modally
-// showButton.addEventListener("click", () => {
-// setDialog.showModal();
-// });
-
-// // "Favorite animal" input sets the value of the submit button
-// inputName.addEventListener("change", (e) => {
-// confirmBtn.value = selectEl.value;
-// });
-
-// // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
-// thingDialog.addEventListener("close", (e) => {
-// outputBox.value =
-//     favDialog.returnValue === "default"
-//     ? "No return value."
-//     : `ReturnValue: ${favDialog.returnValue}.`; // Have to check for "default" rather than empty string
-// });
-
-// function renderThings() {
-//     const thingsListContainer = document.querySelector("[data-things]");
-//     clearElement(thingsListContainer);
-// }
-
-// (function thingDialogOnClick() {
-
-//     const showButton = document.getElementById("add-thing-button");
-//     const thingDialog = document.getElementById("dialog1");
-//     const inputThing = thingDialog.querySelector("#thing-input-name");
-//     const inputDescription = thingDialog.querySelector("#thing-input-description");
-//     const selectPriority = thingDialog.querySelector("#dialog1 select")
-//     const confirmBtn = thingDialog.querySelector("#confirmBtn");
-
-//     // "Show the dialog" button opens the <dialog> modally
-//     showButton.addEventListener("click", () => {
-//     thingDialog.showModal();
-//     });
-
-//     // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
-//     confirmBtn.addEventListener("click", (event) => {
-//     event.preventDefault(); // We don't want to submit this fake form
-//     thingDialog.close(createTask(inputThing.value, inputDescription.value, "", selectPriority.value)); // Have to send the select box value here.
-//     addListsData();
-//     renderTaskLists();
-//     });
-// })();
-
-// (function setDialogOnClick() {
-
-//
-// })();
