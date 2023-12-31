@@ -1,4 +1,4 @@
-import { manageTasks, manageLists } from "./appLogic";
+import { manageTasks, manageLists, lists } from "./appLogic";
 
 const listsContainer = document.querySelector("[data-list]");
 const thingsTitleElement = document.querySelector(".things-list-title");
@@ -39,7 +39,6 @@ function render() {
   const activeList = manageLists
     .getLists()
     .find((list) => list.id === selectedListId);
-
   if (selectedListId === "") {
     return;
   } else {
@@ -71,7 +70,14 @@ function renderThings(activeList) {
     const label = taskElement.querySelector('label')
     label.htmlFor = thing.id
     label.append(thing.title)
-    tasksContainer.appendChild(taskElement)
+    const dueDate = taskElement.querySelector('.thing-due-date')
+    dueDate.append(thing.dueDate)
+    const deleteThingBtn = taskElement.querySelector('.delete-task-btn')
+    deleteThingBtn.addEventListener('click', () => {
+      manageTasks.deleteThing(selectedListId, thing.id)
+      render()
+   })
+   tasksContainer.appendChild(taskElement)
   });
 }
 
@@ -125,6 +131,7 @@ confirmThingBtn.addEventListener("click", (event) => {
   emptyThingDialog();
   thingDialog.close();
   render();
+  console.log(lists)
 });
 
 cancelThingBtn.addEventListener("click", (event) => {

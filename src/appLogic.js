@@ -1,3 +1,16 @@
+let lists = [
+  {
+    id: "001",
+    title: "random",
+    tasks: [{ id: '001', title: "test task (random) 001 task", list: "random", dueDate: '12/12/23', complete: false }],
+  },
+  {
+    id: "002",
+    title: "hophop",
+    tasks: [{ id: '072', title: "test task.2 (hophop) 071.2 task", list: "hophop", dueDate: 'dueDate TEST', complete: false }, { id: '071', title: "test task (hophop) 071 task", list: "hophop", dueDate: '44/44/44', complete: false }],
+  },
+];
+
 const manageTasks = (function () {
   function createTask(title, list = "random", dueDate = "", description = "") {
     return {
@@ -20,21 +33,15 @@ const manageTasks = (function () {
     }
   }
 
-  return { createTask, addTaskToList };
-})();
+  function deleteThing(listID, thingID) {
+    for (let list of lists) {
+      if (list.id === listID)
+      list.tasks.splice(list.tasks.indexOf( thing => thing.id === thingID), 1)
+    }
+  }
 
-let lists = [
-  {
-    id: "001",
-    title: "random",
-    tasks: [{ id: '001', title: "test task (random) 001 task", list: "random", complete: false }],
-  },
-  {
-    id: "002",
-    title: "hophop",
-    tasks: [{ id: '072', title: "test task.2 (hophop) 071.2 task", list: "hophop", complete: false }, { id: '071', title: "test task (hophop) 071 task", list: "hophop", complete: false }],
-  },
-];
+  return { createTask, addTaskToList, deleteThing };
+})();
 
 const manageLists = (function () {
   const createList = (title) => {
@@ -48,4 +55,4 @@ const manageLists = (function () {
   return { createList, getLists, removeList, addList };
 })();
 
-export { manageTasks, manageLists };
+export { manageTasks, manageLists, lists };
