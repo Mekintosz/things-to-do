@@ -6,6 +6,7 @@ const thingsContainer = document.querySelector("[data-things]");
 const tasksContainer = document.querySelector('[data-things]')
 const taskTemplate = document.getElementById('task-template')
 let selectedListId = "";
+let editedThingId = ""
 render();
 
 const addSetBtn = document.getElementById("add-set-button");
@@ -77,8 +78,14 @@ function renderThings(activeList) {
       manageTasks.deleteThing(selectedListId, thing.id)
       render()
    })
+   const editThingBtn = taskElement.querySelector('.edit-task-btn')
+   editThingBtn.addEventListener('click', () => {
+    editThing(thing)
+    editedThingId = thing.id
+   })
    tasksContainer.appendChild(taskElement)
   });
+
 }
 
 function clearElement(element) {
@@ -115,26 +122,40 @@ function emptySetDialog() {
   inputSetName.value = null;
 }
 
-addTaskBtn.addEventListener("click", () => {
-  return thingDialog.showModal();
-});
+(function manageThingModal () {
+  addTaskBtn.addEventListener("click", () => {
+    return thingDialog.showModal();
+  });
 
-confirmThingBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  let newThing = manageTasks.createTask(
-    inputThingName.value,
-    inputThingList.value || "random",
-    inputThingDueDate.value,
-    inputThingDescription.value
-  );
-  manageTasks.addTaskToList(newThing)
-  emptyThingDialog();
-  thingDialog.close();
-  render();
-  console.log(lists)
-});
+  confirmThingBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    let newThing = manageTasks.createTask(
+      inputThingName.value,
+      inputThingList.value || "random",
+      inputThingDueDate.value,
+      inputThingDescription.value
+    );
+    if (editedThingId ==! "") {
+      newThing.id = editedThingId
+      manageTasks.replaceThingById(selectedListId, editedThingId, newThing)
+      editedThingId = ""
+    } else { manageTasks.addTaskToList(newThing)}
+    emptyThingDialog();
+    thingDialog.close();
+    render();
+    console.log(lists)
+  });
 
-cancelThingBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  thingDialog.close();
-});
+  cancelThingBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    thingDialog.close();
+  });
+})()
+
+function editThing(thing) {
+  inputThingName.value = thing.title;
+  inputThingList.value = thing.list;
+  inputThingDescription.value = thing.description;
+  inputThingDueDate.value = thing.dueDate;
+  thingDialog.showModal()
+} 

@@ -40,7 +40,14 @@ const manageTasks = (function () {
     }
   }
 
-  return { createTask, addTaskToList, deleteThing };
+  function replaceThingById(listID, thingID, editedThing) {
+    for (let list of lists) {
+      if (list.id === listID)
+      list.tasks.splice(list.tasks.indexOf( thing => thing.id === thingID), 1, editedThing)
+    }
+  }
+
+  return { createTask, addTaskToList, deleteThing, replaceThingById };
 })();
 
 const manageLists = (function () {
