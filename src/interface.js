@@ -82,6 +82,9 @@ function renderThings(activeList) {
    editThingBtn.addEventListener('click', () => {
     editThing(thing)
     editedThingId = thing.id
+    console.log(thing.id)
+    console.log(editedThingId)
+    console.log(lists)
    })
    tasksContainer.appendChild(taskElement)
   });
@@ -129,27 +132,38 @@ function emptySetDialog() {
 
   confirmThingBtn.addEventListener("click", (event) => {
     event.preventDefault();
+    newThingFromInput()()
+  
+    emptyThingDialog();
+    thingDialog.close();
+    render();
+  });
+
+  const newThingFromInput = function() {
     let newThing = manageTasks.createTask(
       inputThingName.value,
       inputThingList.value || "random",
       inputThingDueDate.value,
       inputThingDescription.value
-    );
-    if (editedThingId ==! "") {
-      newThing.id = editedThingId
-      manageTasks.replaceThingById(selectedListId, editedThingId, newThing)
-      editedThingId = ""
-    } else { manageTasks.addTaskToList(newThing)}
-    emptyThingDialog();
-    thingDialog.close();
-    render();
-    console.log(lists)
-  });
+    )
+    return function replaceOrAdd() {
+      if (editedThingId) {
+        newThing.id = editedThingId
+        manageTasks.replaceThingById(selectedListId, editedThingId, newThing)
+        editedThingId = ""
+        console.log(lists)
+      } else { manageTasks.addTaskToList(newThing)}
+    }
+  }
+
+  
 
   cancelThingBtn.addEventListener("click", (event) => {
     event.preventDefault();
     thingDialog.close();
   });
+
+  
 })()
 
 function editThing(thing) {

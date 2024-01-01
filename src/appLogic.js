@@ -7,7 +7,7 @@ let lists = [
   {
     id: "002",
     title: "hophop",
-    tasks: [{ id: '072', title: "test task.2 (hophop) 071.2 task", list: "hophop", dueDate: 'dueDate TEST', complete: false }, { id: '071', title: "test task (hophop) 071 task", list: "hophop", dueDate: '44/44/44', complete: false }],
+    tasks: [{ id: '072', title: "test task.2 (hophop) 071.2 task", list: "hophop", dueDate: '12/14/27', complete: false }, { id: '071', title: "test task (hophop) 071 task", list: "hophop", dueDate: '44/44/44', complete: false }],
   },
 ];
 
@@ -35,15 +35,18 @@ const manageTasks = (function () {
 
   function deleteThing(listID, thingID) {
     for (let list of lists) {
-      if (list.id === listID)
-      list.tasks.splice(list.tasks.indexOf( thing => thing.id === thingID), 1)
+      if (list.id === listID) {
+      list.tasks.splice(list.tasks.map(thing => thing.id).indexOf(thingID), 1)
+      }
     }
   }
 
   function replaceThingById(listID, thingID, editedThing) {
     for (let list of lists) {
-      if (list.id === listID)
-      list.tasks.splice(list.tasks.indexOf( thing => thing.id === thingID), 1, editedThing)
+      if (list.id === listID) {
+        let indexOfThing = list.tasks.map(thing => thing.id).indexOf(thingID);
+        list.tasks.splice(indexOfThing, 1, editedThing)
+      }
     }
   }
 
