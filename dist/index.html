@@ -12,77 +12,75 @@
    <header class="header">
         <img src="../assets/logo.svg" alt="thinking head" class="logo">
         <h1>Things to do...</h1>
-        <div class="buttons-container">
-            <button id="add-thing-button" class="button add-thing-button"><img src="../assets/add_circle.svg" alt="plus in circle" class="btn-icon">add Thing...</button>
-            <dialog id="dialog-1">
-                <form>
-                    <p>
-                      <label autofocus>
-                        Thing to do:
-                        <input id="thing-input-name">
-                      </label>
-                    </p>
-                    <p>
-                      <label >
-                          List:
-                          <input id="thing-input-list">
-                      </label>
-                    <p>
-                        <label >
-                            Description:
-                            <input id="thing-input-description">
-                        </label>
-                    </p>
-                    <p>
-                        <label >
-                            Due date:
-                            <input type="date" id="thing-input-duedate">
-                        </label>
-                    </p>
-                    <p>
-                        <select>
-                          <option value="default">Low</option>
-                          <option>High</option>
-                          <option>Very important!!!</option>
-                        </select>
-                    </p>
-                    <div>
-                      <button id="cancel-btn-1" value="cancel" formmethod="dialog">Cancel</button>
-                      <button id="confirm-btn-1" value="default">Confirm</button>
-                    </div>
-                  </form>
-              </dialog>
-            <button id="add-set-button" class="button add-set-button"><img src="../assets/set.svg" alt="three dots in triangle" class="btn-icon">add Set</button>
-            <dialog id="dialog-2">
-                <form>
-                    <p>
-                      <label >
-                         Name:
-                        <input id="set-input-name" autofocus>
-                      </label>
-                    </p>
-                    <p>
-                        <label >
-                          Description:
-                          <input id="set-input-description">
-                        </label>
-                      </p>
-                    <div>
-                      <button id="cancel-btn-2" value="cancel" formmethod="dialog">Cancel</button>
-                      <button id="confirm-btn-2" value="default">Confirm</button>
-                    </div>
-                  </form>
-              </dialog>
-        </div>
    </header>
    <main class="main">
         <aside>
-            <h2>Sets :</h2>
+            <h2>Sets</h2>
             <ul class="sets-list" data-list></ul>
+            <button id="add-set-button" class="button add-set-button"><img src="../assets/set.svg" alt="three dots in triangle" class="btn-icon">add Set</button>
+            <dialog id="dialog-1" class="dialog">
+              <form>
+                  <p>
+                    <label autofocus>
+                      Thing to do:
+                      <input id="thing-input-name">
+                    </label>
+                  </p>
+                  <p>
+                    <label >
+                        List:
+                        <input id="thing-input-list">
+                    </label>
+                  <p>
+                      <label >
+                          Description:
+                          <input id="thing-input-description">
+                      </label>
+                  </p>
+                  <p>
+                      <label >
+                          Due date:
+                          <input type="date" id="thing-input-duedate">
+                      </label>
+                  </p>
+                  <p>
+                      <select>
+                        <option value="default">Low</option>
+                        <option>High</option>
+                        <option>Very important!!!</option>
+                      </select>
+                  </p>
+                  <div>
+                    <button id="cancel-btn-1" value="cancel" formmethod="dialog">Cancel</button>
+                    <button id="confirm-btn-1" value="default">Confirm</button>
+                  </div>
+                </form>
+            </dialog>
         </aside>
         <div class="things-container">
             <h2 class="things-list-title"><img src="../assets/set.svg" alt="" class="list-icon">Things to do...</h2>
             <ul class="things-list" data-things></ul>
+            <button id="add-thing-button" class="button add-thing-button"><img src="../assets/add_circle.svg" alt="plus in circle" class="btn-icon">add Thing...</button>
+            <dialog id="dialog-2" class="dialog">
+              <form>
+                  <p>
+                    <label >
+                       Name:
+                      <input id="set-input-name" autofocus>
+                    </label>
+                  </p>
+                  <p>
+                      <label >
+                        Description:
+                        <input id="set-input-description">
+                      </label>
+                    </p>
+                  <div>
+                    <button id="cancel-btn-2" value="cancel" formmethod="dialog">Cancel</button>
+                    <button id="confirm-btn-2" value="default">Confirm</button>
+                  </div>
+                </form>
+            </dialog>
         </div>
    </main>
    <footer class="footer">

@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins&display=swap');
 
 :root {
-    --primary-green: #51B28A;
+    --primary-green: rgba(85, 186, 144, 0.78);
     --secondary-green: #D4E8DA;
-    --primary-button: #B877B9;
+    --bg-vilet: rgba(184, 119, 185, 0.153);
+    --primary-button: #b488b5;
     --important-thing: #FCFF61;
     --very-important-thing: #FF8C8C;
   }
 
 body {
     font-family: 'Poppins', sans-serif;
+    color: rgba(37, 3, 81, 1);
 }
 
 *,
@@ -36,19 +38,23 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: 2.3rem;
+  font-size: 2.6rem;
 }
 
 h2 {
-  font-size: 1.6rem;
+  font-size: 2rem;
   padding: 0.6em;
 }
 
 .header {
+  letter-spacing: 8px;
   display: flex;
   align-items: center;
-  height: 100px;
+  justify-content: center;
+  height: 75px;
   padding: 1.4rem 3rem;
+  margin: 0.3rem;
+  border-radius: 15px;
   background-color: var(--primary-green);
 }
 
@@ -72,18 +78,27 @@ h2 {
 }
 
 .main {
+  font-size: 1.2rem;
   display: flex;
   height: calc(100vh - 9.6rem);
   line-height: 1.8;
 }
 
 aside {
+  font-size: 1.2rem;
+  padding: 1rem;
   background-color: var(--secondary-green);
-  border-right: 2px var(--primary-green) solid;
+  border: 1px var(--primary-green) solid;
   display: flex;
   flex-direction: column;
   width: 30%;
   align-items: center;
+  margin: 0.3rem;
+  border-radius: 15px;
+}
+
+label {
+  font-size: 1.2rem;
 }
 
 .things-list {
@@ -93,7 +108,15 @@ aside {
 }
 
 .things-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 70%;
+  margin: 0.3rem;
+  border-radius: 15px;
+  border: 1px var(--primary-button) solid;
+  background-color: var(--bg-vilet);
 }
 
 .task {
@@ -118,8 +141,10 @@ footer {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 99.5%;
   padding: 1rem;
+  margin: 0.3rem;
+  border-radius: 15px;
 }
 
 .active-list {
@@ -127,22 +152,34 @@ footer {
 }
 
 .button {
-  width: 200px;
-  font-size: 1.1rem;
-  padding: 0.3rem;
+  width: 230px;
+  font-size: 1.3rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.8em;
   background-color: var(--primary-button);
+  border: none;
+  border-radius: 8px;
 }
 
-.add-thing-button {
+.add-thing-button, .add-set-button {
+  margin-top: auto;
+}
+
+
+.dialog {
+position: fixed;
+top: 50%;
+left: 50%;
+min-width: 300px;
+min-height: 250px;
+width: 30%;
+height: 30%;
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
   
-}
-
-.buttons-container {
-  display: flex;
-  margin: 0 auto;
-  gap: 5rem;
 }

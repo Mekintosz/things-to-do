@@ -3,10 +3,10 @@ import { manageTasks, manageLists, lists } from "./appLogic";
 const listsContainer = document.querySelector("[data-list]");
 const thingsTitleElement = document.querySelector(".things-list-title");
 const thingsContainer = document.querySelector("[data-things]");
-const tasksContainer = document.querySelector('[data-things]')
-const taskTemplate = document.getElementById('task-template')
+const tasksContainer = document.querySelector("[data-things]");
+const taskTemplate = document.getElementById("task-template");
 let selectedListId = "";
-let editedThingId = ""
+let editedThingId = "";
 render();
 
 const addSetBtn = document.getElementById("add-set-button");
@@ -64,31 +64,30 @@ function renderLists() {
 
 function renderThings(activeList) {
   activeList.tasks.forEach((thing) => {
-    const taskElement = document.importNode(taskTemplate.content, true)
-    const checkbox = taskElement.querySelector('input')
-    checkbox.id = thing.id
-    checkbox.checked = thing.complete
-    const label = taskElement.querySelector('label')
-    label.htmlFor = thing.id
-    label.append(thing.title)
-    const dueDate = taskElement.querySelector('.thing-due-date')
-    dueDate.append(thing.dueDate)
-    const deleteThingBtn = taskElement.querySelector('.delete-task-btn')
-    deleteThingBtn.addEventListener('click', () => {
-      manageTasks.deleteThing(selectedListId, thing.id)
-      render()
-   })
-   const editThingBtn = taskElement.querySelector('.edit-task-btn')
-   editThingBtn.addEventListener('click', () => {
-    editThing(thing)
-    editedThingId = thing.id
-    console.log(thing.id)
-    console.log(editedThingId)
-    console.log(lists)
-   })
-   tasksContainer.appendChild(taskElement)
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector("input");
+    checkbox.id = thing.id;
+    checkbox.checked = thing.complete;
+    const label = taskElement.querySelector("label");
+    label.htmlFor = thing.id;
+    label.append(thing.title);
+    const dueDate = taskElement.querySelector(".thing-due-date");
+    dueDate.append(thing.dueDate);
+    const deleteThingBtn = taskElement.querySelector(".delete-task-btn");
+    deleteThingBtn.addEventListener("click", () => {
+      manageTasks.deleteThing(selectedListId, thing.id);
+      render();
+    });
+    const editThingBtn = taskElement.querySelector(".edit-task-btn");
+    editThingBtn.addEventListener("click", () => {
+      editThing(thing);
+      editedThingId = thing.id;
+      console.log(thing.id);
+      console.log(editedThingId);
+      console.log(lists);
+    });
+    tasksContainer.appendChild(taskElement);
   });
-
 }
 
 function clearElement(element) {
@@ -125,51 +124,49 @@ function emptySetDialog() {
   inputSetName.value = null;
 }
 
-(function manageThingModal () {
+(function manageThingModal() {
   addTaskBtn.addEventListener("click", () => {
     return thingDialog.showModal();
   });
 
   confirmThingBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    newThingFromInput()()
-  
+    newThingFromInput()();
+
     emptyThingDialog();
     thingDialog.close();
     render();
   });
 
-  const newThingFromInput = function() {
+  const newThingFromInput = function () {
     let newThing = manageTasks.createTask(
       inputThingName.value,
       inputThingList.value || "random",
       inputThingDueDate.value,
       inputThingDescription.value
-    )
+    );
     return function replaceOrAdd() {
       if (editedThingId) {
-        newThing.id = editedThingId
-        manageTasks.replaceThingById(selectedListId, editedThingId, newThing)
-        editedThingId = ""
-        console.log(lists)
-      } else { manageTasks.addTaskToList(newThing)}
-    }
-  }
-
-  
+        newThing.id = editedThingId;
+        manageTasks.replaceThingById(selectedListId, editedThingId, newThing);
+        editedThingId = "";
+        console.log(lists);
+      } else {
+        manageTasks.addTaskToList(newThing);
+      }
+    };
+  };
 
   cancelThingBtn.addEventListener("click", (event) => {
     event.preventDefault();
     thingDialog.close();
   });
-
-  
-})()
+})();
 
 function editThing(thing) {
   inputThingName.value = thing.title;
   inputThingList.value = thing.list;
   inputThingDescription.value = thing.description;
   inputThingDueDate.value = thing.dueDate;
-  thingDialog.showModal()
-} 
+  thingDialog.showModal();
+}
