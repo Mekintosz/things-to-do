@@ -37,6 +37,7 @@ listsContainer.addEventListener("click", (e) => {
 function render() {
   clearElement(listsContainer);
   renderLists();
+  manageLists.save()
   const activeList = manageLists
     .getLists()
     .find((list) => list.id === selectedListId);
