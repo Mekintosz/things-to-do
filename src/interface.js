@@ -36,11 +36,12 @@ listsContainer.addEventListener("click", (e) => {
 
 function render() {
   clearElement(listsContainer);
-  renderLists();
   manageLists.save()
-  const activeList = manageLists
+  renderLists();
+  let activeList =  manageLists
     .getLists()
     .find((list) => list.id === selectedListId);
+  
   if (selectedListId === "") {
     return;
   } else {
@@ -59,8 +60,24 @@ function renderLists() {
     }
     listElement.classList.add("list-ul");
     listElement.innerText = list.title;
+    const editListBtn = document.createElement('button')
+    editListBtn.classList.add('edit-list-btn')
+    editListBtn.innerText = 'Edit'
+    listElement.append(editListBtn)
+    const deleteListBtn = document.createElement('button')
+    deleteListBtn.classList.add('delete-list-btn')
+    deleteListBtn.innerText = 'Delete'
+    deleteListBtn.addEventListener('click', () => deleteList(list.title))
+    listElement.append(deleteListBtn)
     listsContainer.appendChild(listElement);
   });
+}
+
+function deleteList(list) {
+  if (window.confirm(`Do you want to delete entire "${list}" ?`)) {
+    manageLists.removeList(list)
+  render()
+  }
 }
 
 function renderThings(activeList) {
@@ -75,20 +92,28 @@ function renderThings(activeList) {
     const dueDate = taskElement.querySelector(".thing-due-date");
     dueDate.append(thing.dueDate);
     const deleteThingBtn = taskElement.querySelector(".delete-task-btn");
-    deleteThingBtn.addEventListener("click", () => {
-      manageTasks.deleteThing(selectedListId, thing.id);
-      render();
-    });
+    deleteThingBtn.addEventListener("click", () => deleteThing(thing));
     const editThingBtn = taskElement.querySelector(".edit-task-btn");
     editThingBtn.addEventListener("click", () => {
       editThing(thing);
-      editedThingId = thing.id;
-      console.log(thing.id);
-      console.log(editedThingId);
-      console.log(lists);
     });
     tasksContainer.appendChild(taskElement);
   });
+}
+
+function deleteThing(thing) {
+  if (window.confirm(`Do you want to delete "${thing.title}" ?`)) {
+    manageTasks.deleteThing(selectedListId, thing.id);
+  render();
+  }
+}
+function editThing(thing) {
+  inputThingName.value = thing.title;
+  inputThingList.value = thing.list;
+  inputThingDescription.value = thing.description;
+  inputThingDueDate.value = thing.dueDate;
+  editedThingId = thing.id;
+  thingDialog.showModal();
 }
 
 function clearElement(element) {
@@ -126,36 +151,40 @@ function emptySetDialog() {
 }
 
 (function manageThingModal() {
+
   addTaskBtn.addEventListener("click", () => {
     return thingDialog.showModal();
   });
 
   confirmThingBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    newThingFromInput()();
-
+    newThingFromInput();
     emptyThingDialog();
     thingDialog.close();
     render();
   });
 
   const newThingFromInput = function () {
+    let activeList =  manageLists
+    .getLists()
+    .find((list) => list.id === selectedListId);
     let newThing = manageTasks.createTask(
       inputThingName.value,
-      inputThingList.value || "random",
+      inputThingList.value || activeList.title,
       inputThingDueDate.value,
       inputThingDescription.value
     );
-    return function replaceOrAdd() {
-      if (editedThingId) {
-        newThing.id = editedThingId;
-        manageTasks.replaceThingById(selectedListId, editedThingId, newThing);
-        editedThingId = "";
-        console.log(lists);
-      } else {
-        manageTasks.addTaskToList(newThing);
-      }
-    };
+      replaceOrAdd(newThing)
+  };
+
+  function replaceOrAdd(newThing) {
+    if (editedThingId) {
+      newThing.id = editedThingId;
+      manageTasks.replaceThingById(selectedListId, editedThingId, newThing);
+      editedThingId = "";
+    } else {
+      manageTasks.addTaskToList(newThing);
+    }
   };
 
   cancelThingBtn.addEventListener("click", (event) => {
@@ -164,10 +193,4 @@ function emptySetDialog() {
   });
 })();
 
-function editThing(thing) {
-  inputThingName.value = thing.title;
-  inputThingList.value = thing.list;
-  inputThingDescription.value = thing.description;
-  inputThingDueDate.value = thing.dueDate;
-  thingDialog.showModal();
-}
+

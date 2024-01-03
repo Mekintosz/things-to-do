@@ -1,17 +1,5 @@
 const LOCAL_STORAGE_LIST_KEY = 'task.lists'
-
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || []
-//   {
-//     id: "001",
-//     title: "random",
-//     tasks: [{ id: '001', title: "test task (random) 001 task", list: "random", dueDate: '12/12/23', complete: false }],
-//   },
-//   {
-//     id: "002",
-//     title: "hophop",
-//     tasks: [{ id: '072', title: "test task.2 (hophop) 071.2 task", list: "hophop", dueDate: '12/14/27', complete: false }, { id: '071', title: "test task (hophop) 071 task", list: "hophop", dueDate: '44/44/44', complete: false }],
-//   },
-// ];
 
 const manageTasks = (function () {
   function createTask(title, list = "random", dueDate = "", description = "") {
@@ -26,11 +14,13 @@ const manageTasks = (function () {
   }
 
   function addTaskToList(task) {
+    if (!lists.some(list => list.title ===task)) {
+      manageLists.addList(manageLists.createList(task.list))
+      console.log(lists)
+    }
     for (let list of manageLists.getLists()) {
       if (list.title === task.list) {
         list.tasks.push(task);
-      } else {
-        manageLists.createList(task.list);
       }
     }
   }
@@ -61,8 +51,10 @@ const manageLists = (function () {
   };
   const getLists = () => lists;
   const addList = (x) => lists.unshift(x);
-  const removeList = (listTitle) =>
-    (lists = lists.filter((list) => list.title !== listTitle));
+  const removeList = (listTitle) => {
+    lists = lists.filter((list) => list.title !== listTitle);
+    console.log(lists)
+  }
   const save = () => {
     localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
   }

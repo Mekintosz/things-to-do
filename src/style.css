@@ -181,5 +181,9 @@ height: 30%;
 
 .dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
-  
+}
+
+.list-ul {
+  display: flex;
+  gap: 2.6rem;
 }
