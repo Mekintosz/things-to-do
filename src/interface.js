@@ -34,6 +34,23 @@ listsContainer.addEventListener("click", (e) => {
   }
 });
 
+addSetBtn.addEventListener("click", () => {
+  return setDialog.showModal();
+});
+
+confirmSetBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  manageLists.addList(manageLists.createList(inputSetName.value));
+  emptySetDialog();
+  setDialog.close();
+  render();
+});
+
+cancelSetBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  setDialog.close();
+});
+
 function render() {
   clearElement(listsContainer);
   manageLists.save()
@@ -107,6 +124,7 @@ function deleteThing(thing) {
   render();
   }
 }
+
 function editThing(thing) {
   inputThingName.value = thing.title;
   inputThingList.value = thing.list;
@@ -121,23 +139,6 @@ function clearElement(element) {
     element.firstChild.remove();
   }
 }
-
-addSetBtn.addEventListener("click", () => {
-  return setDialog.showModal();
-});
-
-confirmSetBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  manageLists.addList(manageLists.createList(inputSetName.value));
-  emptySetDialog();
-  setDialog.close();
-  render();
-});
-
-cancelSetBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  setDialog.close();
-});
 
 function emptyThingDialog() {
   inputThingName.value = null;
@@ -164,10 +165,19 @@ function emptySetDialog() {
     render();
   });
 
-  const newThingFromInput = function () {
-    let activeList =  manageLists
+  cancelThingBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    thingDialog.close();
+  });
+
+  function checkForActiveList() {
+    return manageLists
     .getLists()
     .find((list) => list.id === selectedListId);
+  }
+
+  function newThingFromInput() {
+    let activeList =  checkForActiveList()
     let newThing = manageTasks.createTask(
       inputThingName.value,
       inputThingList.value || activeList.title,
@@ -187,10 +197,6 @@ function emptySetDialog() {
     }
   };
 
-  cancelThingBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    thingDialog.close();
-  });
 })();
 
 

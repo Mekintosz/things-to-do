@@ -14,7 +14,7 @@ const manageTasks = (function () {
   }
 
   function addTaskToList(task) {
-    if (!lists.some(list => list.title ===task)) {
+    if (!lists.some(list => list.title === task.list)) {
       manageLists.addList(manageLists.createList(task.list))
       console.log(lists)
     }
