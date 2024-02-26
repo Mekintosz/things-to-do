@@ -36,7 +36,7 @@ const manageTasks = (function () {
   function replaceThingById(listID, thingID, editedThing) {
     for (let list of lists) {
       if (list.id === listID) {
-        let indexOfThing = list.tasks.map(thing => thing.id).indexOf(thingID);
+        let indexOfThing = list.tasks.indexOf(thingID);
         list.tasks.splice(indexOfThing, 1, editedThing)
       }
     }

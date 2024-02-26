@@ -176,6 +176,13 @@ function emptySetDialog() {
     .find((list) => list.id === selectedListId);
   }
 
+  function findListIdByName(listName) {
+    for (let list of lists) {
+    if (list.name === listName)
+    return list.id
+    }
+  }
+
   function newThingFromInput() {
     let activeList =  checkForActiveList()
     let newThing = manageTasks.createTask(
@@ -188,10 +195,19 @@ function emptySetDialog() {
   };
 
   function replaceOrAdd(newThing) {
-    if (editedThingId) {
+    let activeListId =  checkForActiveList().id
+    let newThingListId = findListIdByName(newThing.list)
+    if (editedThingId && newThingListId !== activeListId) {
       newThing.id = editedThingId;
-      manageTasks.replaceThingById(selectedListId, editedThingId, newThing);
+      manageTasks.replaceThingById(newThingListId, editedThingId, newThing);
+      manageTasks.deleteThing(activeListId, editedThingId)
       editedThingId = "";
+      return
+    } else if (editedThingId) {
+      newThing.id = editedThingId;
+      manageTasks.replaceThingById(activeListId, editedThingId, newThing);
+      editedThingId = ""
+      return
     } else {
       manageTasks.addTaskToList(newThing);
     }
