@@ -13,11 +13,14 @@ const manageTasks = (function () {
     };
   }
 
-  function addTaskToList(task) {
-    if (!lists.some(list => list.title === task.list)) {
-      manageLists.addList(manageLists.createList(task.list))
-      console.log(lists)
+  function createListBYTitle(listTitle) {
+    if (!lists.some(list => list.title === listTitle)) {
+      manageLists.addList(manageLists.createList(listTitle))
     }
+  }
+
+  function addTaskToList(task) {
+    createListBYTitle(task.list)
     for (let list of manageLists.getLists()) {
       if (list.title === task.list) {
         list.tasks.push(task);

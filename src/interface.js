@@ -1,44 +1,44 @@
-import { manageTasks, manageLists, lists } from "./appLogic";
+import { manageTasks, manageLists, lists } from './appLogic';
 
-const listsContainer = document.querySelector("[data-list]");
-const thingsTitleElement = document.querySelector(".things-list-title");
-const thingsContainer = document.querySelector("[data-things]");
-const tasksContainer = document.querySelector("[data-things]");
-const taskTemplate = document.getElementById("task-template");
-let selectedListId = "";
-let editedThingId = "";
+const listsContainer = document.querySelector('[data-list]');
+const thingsTitleElement = document.querySelector('.things-list-title');
+const thingsContainer = document.querySelector('[data-things]');
+const tasksContainer = document.querySelector('[data-things]');
+const taskTemplate = document.getElementById('task-template');
+let selectedListId = '';
+let editedThingId = '';
 render();
 
-const addSetBtn = document.getElementById("add-set-button");
-const setDialog = document.getElementById("dialog-2");
-const inputSetName = setDialog.querySelector("#set-input-name");
-const inputSetDescription = setDialog.querySelector("#set-input-description");
-const confirmSetBtn = setDialog.querySelector("#confirm-btn-2");
-const cancelSetBtn = document.getElementById("cancel-btn-2");
+const addSetBtn = document.getElementById('add-set-button');
+const setDialog = document.getElementById('dialog-2');
+const inputSetName = setDialog.querySelector('#set-input-name');
+const inputSetDescription = setDialog.querySelector('#set-input-description');
+const confirmSetBtn = setDialog.querySelector('#confirm-btn-2');
+const cancelSetBtn = document.getElementById('cancel-btn-2');
 
-const addTaskBtn = document.getElementById("add-thing-button");
-const thingDialog = document.getElementById("dialog-1");
-const inputThingName = document.getElementById("thing-input-name");
-const inputThingList = document.getElementById("thing-input-list");
+const addTaskBtn = document.getElementById('add-thing-button');
+const thingDialog = document.getElementById('dialog-1');
+const inputThingName = document.getElementById('thing-input-name');
+const inputThingList = document.getElementById('thing-input-list');
 const inputThingDescription = document.getElementById(
-  "thing-input-description"
+  'thing-input-description'
 );
-const inputThingDueDate = document.getElementById("thing-input-duedate");
-const confirmThingBtn = thingDialog.querySelector("#confirm-btn-1");
-const cancelThingBtn = document.getElementById("cancel-btn-1");
+const inputThingDueDate = document.getElementById('thing-input-duedate');
+const confirmThingBtn = thingDialog.querySelector('#confirm-btn-1');
+const cancelThingBtn = document.getElementById('cancel-btn-1');
 
-listsContainer.addEventListener("click", (e) => {
-  if (e.target.tagName.toLowerCase() === "li") {
+listsContainer.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'li') {
     selectedListId = e.target.dataset.listId;
     render();
   }
 });
 
-addSetBtn.addEventListener("click", () => {
+addSetBtn.addEventListener('click', () => {
   return setDialog.showModal();
 });
 
-confirmSetBtn.addEventListener("click", (event) => {
+confirmSetBtn.addEventListener('click', (event) => {
   event.preventDefault();
   manageLists.addList(manageLists.createList(inputSetName.value));
   emptySetDialog();
@@ -46,7 +46,7 @@ confirmSetBtn.addEventListener("click", (event) => {
   render();
 });
 
-cancelSetBtn.addEventListener("click", (event) => {
+cancelSetBtn.addEventListener('click', (event) => {
   event.preventDefault();
   setDialog.close();
 });
@@ -59,7 +59,7 @@ function render() {
     .getLists()
     .find((list) => list.id === selectedListId);
   
-  if (selectedListId === "") {
+  if (selectedListId === '') {
     return;
   } else {
     thingsTitleElement.innerText = activeList.title;
@@ -70,12 +70,12 @@ function render() {
 
 function renderLists() {
   manageLists.getLists().forEach((list) => {
-    const listElement = document.createElement("li");
+    const listElement = document.createElement('li');
     listElement.dataset.listId = list.id;
     if (list.id === selectedListId) {
-      listElement.classList.add("active-list");
+      listElement.classList.add('active-list');
     }
-    listElement.classList.add("list-ul");
+    listElement.classList.add('list-ul');
     listElement.innerText = list.title;
     const editListBtn = document.createElement('button')
     editListBtn.classList.add('edit-list-btn')
@@ -100,18 +100,18 @@ function deleteList(list) {
 function renderThings(activeList) {
   activeList.tasks.forEach((thing) => {
     const taskElement = document.importNode(taskTemplate.content, true);
-    const checkbox = taskElement.querySelector("input");
+    const checkbox = taskElement.querySelector('input');
     checkbox.id = thing.id;
     checkbox.checked = thing.complete;
-    const label = taskElement.querySelector("label");
+    const label = taskElement.querySelector('label');
     label.htmlFor = thing.id;
     label.append(thing.title);
-    const dueDate = taskElement.querySelector(".thing-due-date");
+    const dueDate = taskElement.querySelector('.thing-due-date');
     dueDate.append(thing.dueDate);
-    const deleteThingBtn = taskElement.querySelector(".delete-task-btn");
-    deleteThingBtn.addEventListener("click", () => deleteThing(thing));
-    const editThingBtn = taskElement.querySelector(".edit-task-btn");
-    editThingBtn.addEventListener("click", () => {
+    const deleteThingBtn = taskElement.querySelector('.delete-task-btn');
+    deleteThingBtn.addEventListener('click', () => deleteThing(thing));
+    const editThingBtn = taskElement.querySelector('.edit-task-btn');
+    editThingBtn.addEventListener('click', () => {
       editThing(thing);
     });
     tasksContainer.appendChild(taskElement);
@@ -153,11 +153,11 @@ function emptySetDialog() {
 
 (function manageThingModal() {
 
-  addTaskBtn.addEventListener("click", () => {
+  addTaskBtn.addEventListener('click', () => {
     return thingDialog.showModal();
   });
 
-  confirmThingBtn.addEventListener("click", (event) => {
+  confirmThingBtn.addEventListener('click', (event) => {
     event.preventDefault();
     newThingFromInput();
     emptyThingDialog();
@@ -165,7 +165,7 @@ function emptySetDialog() {
     render();
   });
 
-  cancelThingBtn.addEventListener("click", (event) => {
+  cancelThingBtn.addEventListener('click', (event) => {
     event.preventDefault();
     thingDialog.close();
   });
@@ -176,9 +176,9 @@ function emptySetDialog() {
     .find((list) => list.id === selectedListId);
   }
 
-  function findListIdByName(listName) {
+  function findListIdByName(listTitle) {
     for (let list of lists) {
-    if (list.name === listName)
+    if (list.title === listTitle)
     return list.id
     }
   }
@@ -191,25 +191,27 @@ function emptySetDialog() {
       inputThingDueDate.value,
       inputThingDescription.value
     );
+      console.log(newThing)
       replaceOrAdd(newThing)
   };
-
+  
   function replaceOrAdd(newThing) {
     let activeListId =  checkForActiveList().id
     let newThingListId = findListIdByName(newThing.list)
     if (editedThingId && newThingListId !== activeListId) {
       newThing.id = editedThingId;
-      manageTasks.replaceThingById(newThingListId, editedThingId, newThing);
+      manageTasks.addTaskToList(newThing)
       manageTasks.deleteThing(activeListId, editedThingId)
-      editedThingId = "";
+      editedThingId = '';
       return
     } else if (editedThingId) {
       newThing.id = editedThingId;
       manageTasks.replaceThingById(activeListId, editedThingId, newThing);
-      editedThingId = ""
+      editedThingId = ''
       return
     } else {
       manageTasks.addTaskToList(newThing);
+      editedThingId = ''
     }
   };
 
