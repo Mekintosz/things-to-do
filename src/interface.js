@@ -196,7 +196,7 @@ function emptySetDialog() {
   };
   
   function replaceOrAdd(newThing) {
-    let activeListId =  checkForActiveList().id
+    let activeListId =  checkForActiveList()?.id
     let newThingListId = findListIdByName(newThing.list)
     if (editedThingId && newThingListId !== activeListId) {
       newThing.id = editedThingId;
@@ -215,6 +215,7 @@ function emptySetDialog() {
     }
   };
 
+  
 })();
 
 
