@@ -7,7 +7,6 @@ const tasksContainer = document.querySelector('[data-things]');
 const taskTemplate = document.getElementById('task-template');
 let selectedListId = '';
 let editedThingId = '';
-render();
 
 const addSetBtn = document.getElementById('add-set-button');
 const setDialog = document.getElementById('dialog-2');
@@ -26,6 +25,8 @@ const inputThingDescription = document.getElementById(
 const inputThingDueDate = document.getElementById('thing-input-duedate');
 const confirmThingBtn = thingDialog.querySelector('#confirm-btn-1');
 const cancelThingBtn = document.getElementById('cancel-btn-1');
+
+render();
 
 listsContainer.addEventListener('click', (e) => {
   if (e.target.tagName.toLowerCase() === 'li') {
@@ -58,42 +59,12 @@ function render() {
   let activeList =  manageLists
     .getLists()
     .find((list) => list.id === selectedListId);
-  
   if (selectedListId === '') {
     return;
   } else {
     thingsTitleElement.innerText = activeList.title;
     clearElement(thingsContainer);
     renderThings(activeList);
-  }
-}
-
-function renderLists() {
-  manageLists.getLists().forEach((list) => {
-    const listElement = document.createElement('li');
-    listElement.dataset.listId = list.id;
-    if (list.id === selectedListId) {
-      listElement.classList.add('active-list');
-    }
-    listElement.classList.add('list-ul');
-    listElement.innerText = list.title;
-    const editListBtn = document.createElement('button')
-    editListBtn.classList.add('edit-list-btn')
-    editListBtn.innerText = 'Edit'
-    listElement.append(editListBtn)
-    const deleteListBtn = document.createElement('button')
-    deleteListBtn.classList.add('delete-list-btn')
-    deleteListBtn.innerText = 'Delete'
-    deleteListBtn.addEventListener('click', () => deleteList(list.title))
-    listElement.append(deleteListBtn)
-    listsContainer.appendChild(listElement);
-  });
-}
-
-function deleteList(list) {
-  if (window.confirm(`Do you want to delete entire "${list}" ?`)) {
-    manageLists.removeList(list)
-  render()
   }
 }
 
@@ -118,12 +89,36 @@ function renderThings(activeList) {
   });
 }
 
-function deleteThing(thing) {
-  if (window.confirm(`Do you want to delete "${thing.title}" ?`)) {
-    manageTasks.deleteThing(selectedListId, thing.id);
-  render();
-  }
+function renderLists() {
+  manageLists.getLists().forEach((list) => {
+    const listElement = document.createElement('li');
+    listElement.dataset.listId = list.id;
+    
+    listElement.classList.add('list-ul');
+    listElement.innerText = list.title;
+    const editListBtn = document.createElement('button')
+    editListBtn.classList.add('edit-list-btn')
+    editListBtn.innerText = 'Edit'
+    listElement.append(editListBtn)
+    const deleteListBtn = document.createElement('button')
+    deleteListBtn.classList.add('delete-list-btn')
+    deleteListBtn.innerText = 'Delete'
+    deleteListBtn.addEventListener('click', () => deleteList(list.title))
+    listElement.append(deleteListBtn)
+    listsContainer.appendChild(listElement);
+    if (list.id === selectedListId) {
+      listElement.classList.add('active-list');
+      return
+    } else {
+      editListBtn.style.display = 'none'
+    }
+  });
 }
+
+function editSet(set) {
+
+}
+
 
 function editThing(thing) {
   inputThingName.value = thing.title;
@@ -132,6 +127,16 @@ function editThing(thing) {
   inputThingDueDate.value = thing.dueDate;
   editedThingId = thing.id;
   thingDialog.showModal();
+}
+
+function deleteList(list) {
+  manageLists.removeList(list)
+  render()
+}
+
+function deleteThing(thing) {
+  manageTasks.deleteThing(selectedListId, thing.id);
+  render();
 }
 
 function clearElement(element) {
@@ -191,7 +196,6 @@ function emptySetDialog() {
       inputThingDueDate.value,
       inputThingDescription.value
     );
-      console.log(newThing)
       replaceOrAdd(newThing)
   };
   
@@ -214,8 +218,6 @@ function emptySetDialog() {
       editedThingId = ''
     }
   };
-
-  
 })();
 
 
