@@ -54,9 +54,9 @@ cancelSetBtn.addEventListener('click', (event) => {
 
 function render() {
   clearElement(listsContainer);
-  manageLists.save()
+  manageLists.save();
   renderLists();
-  let activeList =  manageLists
+  let activeList = manageLists
     .getLists()
     .find((list) => list.id === selectedListId);
   if (selectedListId === '') {
@@ -93,32 +93,27 @@ function renderLists() {
   manageLists.getLists().forEach((list) => {
     const listElement = document.createElement('li');
     listElement.dataset.listId = list.id;
-    
+
     listElement.classList.add('list-ul');
     listElement.innerText = list.title;
-    const editListBtn = document.createElement('button')
-    editListBtn.classList.add('edit-list-btn')
-    editListBtn.innerText = 'Edit'
-    listElement.append(editListBtn)
-    const deleteListBtn = document.createElement('button')
-    deleteListBtn.classList.add('delete-list-btn')
-    deleteListBtn.innerText = 'Delete'
-    deleteListBtn.addEventListener('click', () => deleteList(list.title))
-    listElement.append(deleteListBtn)
+    const editListBtn = document.createElement('button');
+    editListBtn.classList.add('edit-list-btn');
+    editListBtn.innerText = 'Edit';
+    listElement.append(editListBtn);
+    const deleteListBtn = document.createElement('button');
+    deleteListBtn.classList.add('delete-list-btn');
+    deleteListBtn.innerText = 'Delete';
+    deleteListBtn.addEventListener('click', () => deleteList(list.title));
+    listElement.append(deleteListBtn);
     listsContainer.appendChild(listElement);
     if (list.id === selectedListId) {
       listElement.classList.add('active-list');
-      return
+      return;
     } else {
-      editListBtn.style.display = 'none'
+      editListBtn.style.display = 'none';
     }
   });
 }
-
-function editSet(set) {
-
-}
-
 
 function editThing(thing) {
   inputThingName.value = thing.title;
@@ -130,8 +125,8 @@ function editThing(thing) {
 }
 
 function deleteList(list) {
-  manageLists.removeList(list)
-  render()
+  manageLists.removeList(list);
+  render();
 }
 
 function deleteThing(thing) {
@@ -157,7 +152,6 @@ function emptySetDialog() {
 }
 
 (function manageThingModal() {
-
   addTaskBtn.addEventListener('click', () => {
     return thingDialog.showModal();
   });
@@ -176,48 +170,43 @@ function emptySetDialog() {
   });
 
   function checkForActiveList() {
-    return manageLists
-    .getLists()
-    .find((list) => list.id === selectedListId);
+    return manageLists.getLists().find((list) => list.id === selectedListId);
   }
 
   function findListIdByName(listTitle) {
     for (let list of lists) {
-    if (list.title === listTitle)
-    return list.id
+      if (list.title === listTitle) return list.id;
     }
   }
 
   function newThingFromInput() {
-    let activeList =  checkForActiveList()
+    let activeList = checkForActiveList();
     let newThing = manageTasks.createTask(
       inputThingName.value,
       inputThingList.value || activeList.title,
       inputThingDueDate.value,
       inputThingDescription.value
     );
-      replaceOrAdd(newThing)
-  };
-  
+    replaceOrAdd(newThing);
+  }
+
   function replaceOrAdd(newThing) {
-    let activeListId =  checkForActiveList()?.id
-    let newThingListId = findListIdByName(newThing.list)
+    let activeListId = checkForActiveList()?.id;
+    let newThingListId = findListIdByName(newThing.list);
     if (editedThingId && newThingListId !== activeListId) {
       newThing.id = editedThingId;
-      manageTasks.addTaskToList(newThing)
-      manageTasks.deleteThing(activeListId, editedThingId)
+      manageTasks.addTaskToList(newThing);
+      manageTasks.deleteThing(activeListId, editedThingId);
       editedThingId = '';
-      return
+      return;
     } else if (editedThingId) {
       newThing.id = editedThingId;
       manageTasks.replaceThingById(activeListId, editedThingId, newThing);
-      editedThingId = ''
-      return
+      editedThingId = '';
+      return;
     } else {
       manageTasks.addTaskToList(newThing);
-      editedThingId = ''
+      editedThingId = '';
     }
-  };
+  }
 })();
-
-

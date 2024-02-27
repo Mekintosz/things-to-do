@@ -1,5 +1,5 @@
-const LOCAL_STORAGE_LIST_KEY = 'task.lists'
-let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || []
+const LOCAL_STORAGE_LIST_KEY = "task.lists";
+let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 
 const manageTasks = (function () {
   function createTask(title, list = "random", dueDate = "", description = "") {
@@ -14,13 +14,13 @@ const manageTasks = (function () {
   }
 
   function createListBYTitle(listTitle) {
-    if (!lists.some(list => list.title === listTitle)) {
-      manageLists.addList(manageLists.createList(listTitle))
+    if (!lists.some((list) => list.title === listTitle)) {
+      manageLists.addList(manageLists.createList(listTitle));
     }
   }
 
   function addTaskToList(task) {
-    createListBYTitle(task.list)
+    createListBYTitle(task.list);
     for (let list of manageLists.getLists()) {
       if (list.title === task.list) {
         list.tasks.push(task);
@@ -31,7 +31,10 @@ const manageTasks = (function () {
   function deleteThing(listID, thingID) {
     for (let list of lists) {
       if (list.id === listID) {
-      list.tasks.splice(list.tasks.map(thing => thing.id).indexOf(thingID), 1)
+        list.tasks.splice(
+          list.tasks.map((thing) => thing.id).indexOf(thingID),
+          1
+        );
       }
     }
   }
@@ -40,7 +43,7 @@ const manageTasks = (function () {
     for (let list of lists) {
       if (list.id === listID) {
         let indexOfThing = list.tasks.indexOf(thingID);
-        list.tasks.splice(indexOfThing, 1, editedThing)
+        list.tasks.splice(indexOfThing, 1, editedThing);
       }
     }
   }
@@ -56,11 +59,11 @@ const manageLists = (function () {
   const addList = (x) => lists.unshift(x);
   const removeList = (listTitle) => {
     lists = lists.filter((list) => list.title !== listTitle);
-    console.log(lists)
-  }
+    console.log(lists);
+  };
   const save = () => {
-    localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
-  }
+    localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  };
 
   return { createList, getLists, removeList, addList, save };
 })();
