@@ -13,28 +13,23 @@ const manageTasks = (function () {
     };
   }
 
-  function createListBYTitle(listTitle) {
-    if (!lists.some((list) => list.title === listTitle)) {
-      manageLists.addList(manageLists.createList(listTitle));
-    }
-  }
-
   function addTaskToList(task) {
-    createListBYTitle(task.list);
-    for (let list of manageLists.getLists()) {
-      if (list.title === task.list) {
-        list.tasks.push(task);
-      }
-    }
+    const targetList = ensureList(task.list);
+    targetList.tasks.push(task);
+    manageLists.save();
+    return targetList;
   }
 
   function deleteThing(listID, thingID) {
     for (let list of lists) {
       if (list.id === listID) {
-        list.tasks.splice(
-          list.tasks.map((thing) => thing.id).indexOf(thingID),
-          1
+        const indexToRemove = list.tasks.findIndex(
+          (thing) => thing.id === thingID
         );
+        if (indexToRemove !== -1) {
+          list.tasks.splice(indexToRemove, 1);
+          manageLists.save();
+        }
       }
     }
   }
@@ -42,27 +37,64 @@ const manageTasks = (function () {
   function replaceThingById(listID, thingID, editedThing) {
     for (let list of lists) {
       if (list.id === listID) {
-        let indexOfThing = list.tasks.indexOf(thingID);
-        list.tasks.splice(indexOfThing, 1, editedThing);
+        let indexOfThing = list.tasks.findIndex((task) => task.id === thingID);
+        if (indexOfThing !== -1) {
+          list.tasks.splice(indexOfThing, 1, editedThing);
+          manageLists.save();
+        }
       }
     }
   }
 
-  return { createTask, addTaskToList, deleteThing, replaceThingById };
+  function setTaskCompletion(listID, thingID, complete) {
+    for (let list of lists) {
+      if (list.id === listID) {
+        const task = list.tasks.find((thing) => thing.id === thingID);
+        if (task) {
+          task.complete = complete;
+          manageLists.save();
+        }
+      }
+    }
+  }
+
+  function ensureList(listTitle) {
+    let existingList = manageLists
+      .getLists()
+      .find((list) => list.title === listTitle);
+    if (!existingList) {
+      existingList = manageLists.addList(manageLists.createList(listTitle));
+    }
+    return existingList;
+  }
+
+  return {
+    createTask,
+    addTaskToList,
+    deleteThing,
+    replaceThingById,
+    setTaskCompletion,
+    ensureList,
+  };
 })();
 
 const manageLists = (function () {
+  const save = () => {
+    localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  };
+
   const createList = (title) => {
     return { id: Date.now().toString(), title, tasks: [] };
   };
   const getLists = () => lists;
-  const addList = (x) => lists.unshift(x);
-  const removeList = (listTitle) => {
-    lists = lists.filter((list) => list.title !== listTitle);
-    console.log(lists);
+  const addList = (list) => {
+    lists.unshift(list);
+    save();
+    return list;
   };
-  const save = () => {
-    localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  const removeList = (listId) => {
+    lists = lists.filter((list) => list.id !== listId);
+    save();
   };
 
   return { createList, getLists, removeList, addList, save };

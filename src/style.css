@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins&display=swap");
 
 :root {
-    --primary-green: rgba(85, 186, 144, 0.78);
-    --secondary-green: #D4E8DA;
-    --bg-vilet: rgba(184, 119, 185, 0.153);
-    --primary-button: #b488b5;
-    --important-thing: #FCFF61;
-    --very-important-thing: #FF8C8C;
-  }
+  --primary-green: rgba(85, 186, 144, 0.78);
+  --secondary-green: #d4e8da;
+  --bg-vilet: rgba(184, 119, 185, 0.153);
+  --primary-button: #b488b5;
+  --important-thing: #fcff61;
+  --very-important-thing: #ff8c8c;
+}
 
 body {
-    font-family: 'Poppins', sans-serif;
-    color: rgba(37, 3, 81, 1);
+  font-family: "Poppins", sans-serif;
+  color: rgba(37, 3, 81, 1);
 }
 
 *,
@@ -32,8 +32,11 @@ ul {
   list-style: none;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Cutive', serif;
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Cutive", serif;
   font-weight: 400;
 }
 
@@ -164,19 +167,19 @@ footer {
   border-radius: 8px;
 }
 
-.add-thing-button, .add-set-button {
+.add-thing-button,
+.add-set-button {
   margin-top: auto;
 }
 
-
 .dialog {
-position: fixed;
-top: 50%;
-left: 50%;
-min-width: 300px;
-min-height: 250px;
-width: 30%;
-height: 30%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 300px;
+  min-height: 250px;
+  width: 30%;
+  height: 30%;
 }
 
 .dialog::backdrop {
@@ -186,4 +189,14 @@ height: 30%;
 .list-ul {
   display: flex;
   gap: 2.6rem;
+  align-items: center;
+}
+
+.list-title {
+  flex: 1;
+}
+
+.delete-list-btn,
+.edit-list-btn {
+  cursor: pointer;
 }
